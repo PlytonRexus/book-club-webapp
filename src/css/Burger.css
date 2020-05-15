@@ -1,0 +1,9 @@
+.burger {
+    font-size: 30x;
+    cursor: "pointer";
+    border: none;
+    top: 10px;
+    left: 10px;
+    background: #333;
+    color: white;
+}

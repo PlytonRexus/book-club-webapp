@@ -1,0 +1,99 @@
+.navbar {
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 3;
+    margin-bottom: 50px;
+    border-bottom: 3px solid lightsalmon;
+}
+
+.navbar a {
+    float: right;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    height: 30px;
+}
+
+.navbar prof {
+    float: right;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    height: 30px;
+}
+
+.navbar button {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar span {
+    float: left;
+    display: block;
+    color: #000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.burger {
+    float: left;
+}
+
+.navbar a:hover {
+    background: #ddd;
+    color: black;
+}
+
+.navbar button:hover {
+    background: #ddd;
+    color: black;
+}
+
+.navbar span:hover {
+    background: #ddd;
+    color: black;
+}
+
+.avatar {
+    border-radius: 50%;
+    border: 2px orange;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#logout-btn {
+    border: none;
+    display: none;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 18px;
+    background-color: lightsalmon;
+    transition: display 2s;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #ddd;
+    color: black;
+}
