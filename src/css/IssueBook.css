@@ -1,0 +1,22 @@
+.submitIssue {
+    border: none;
+    background-color: green;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+}
+
+.submitIssue:hover {
+    background-color: goldenrod;
+}
+
+.issuer {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+#issuer-you {
+    background-color: yellow;
+}

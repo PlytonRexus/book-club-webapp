@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import '../css/Catalogue.css';
 import SearchBar from './SearchBar';
 import { lread } from '../middleware/localStorage';
-import { issueThisBook } from '../utils/Catalogue';
+import IssueBook from './IssueBook';
+import { launchModal } from '../utils/Modal';
 
 const catalogueURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
 const DisplayBody = (props) => {
     var body;
-    // console.log(props, lread('bkclbSid').split(',')[2]);
     if (props.books) {
         body = props.books.map((book, index) => {
             return (
@@ -32,7 +32,10 @@ const DisplayBody = (props) => {
                         <td>
                             <button onClick={(e) => {
                                 e.preventDefault();
-                                issueThisBook(index);
+                                launchModal();
+                                window
+                                .ModalRef
+                                .setState({ toLoad: <IssueBook bookId={book._id} /> });
                             }}>
                                 Issue
                             </button>
@@ -47,7 +50,6 @@ const DisplayBody = (props) => {
 };
 
 const DisplayHead = (props) => {
-    // console.log(props, lread('bkclbSid').split(',')[2]);
     return (
         <thead className="catalogue-header">
             <tr>

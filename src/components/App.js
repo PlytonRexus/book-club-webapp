@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import { auth } from '../middleware/auth';
 import { openSidebar, closeSidebar } from '../utils/Sidebar';
+import Modal from './Modal';
 
 class App extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class App extends Component {
     }
 
     componentDidMount = () => {
-        // document.querySelector('body').style.background = `url(${process.env.PUBLIC_URL}/book-background.jpg)`;
+        document.querySelector('body').style.background = 
+            `url(${process.env.PUBLIC_URL}/book-background${Math.floor(Math.random() * 8)}.jpg)`;
         document.querySelector('body').style.backgroundAttachment = 'fixed';
         // `url(${process.env.PUBLIC_URL}/book-background.jpg)`
         openSidebar();
@@ -51,6 +53,7 @@ class App extends Component {
     render = () => {
         return (
             <div className="App">
+                <Modal ref={ (Modal) => { window.ModalRef = Modal } } />
                 <Sidebar 
                     active={this.state.active}
                     authState={this.state.authState}

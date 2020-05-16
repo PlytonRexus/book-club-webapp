@@ -2,7 +2,8 @@
 
 .table-wrapper {
     margin: 10px 0px 50px;
-    box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
+    /* Originally, 0px 35px 50px 0px */
     padding: 2vw;
 }
 
