@@ -3,6 +3,8 @@ import Table from './Table';
 import Form from './Form';
 import Counter from './Counter';
 import { auth } from '../middleware/auth';
+import { lread } from '../middleware/localStorage';
+import Header from './Header';
 
 class Home extends Component {
     state = {
@@ -43,9 +45,7 @@ class Home extends Component {
         return (
             <div>
                 {/* <Burger /> */}
-                <header>
-                    <h1>Hello, Table!</h1>
-                </header>
+                <Header header={`Hello, ${lread('bkclbSid').split(',')[1]}!`}/>
                 <div>
                     <Table 
                         employees={this.state.employees} 

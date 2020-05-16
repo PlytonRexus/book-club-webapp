@@ -13,20 +13,35 @@
     border: none;
     border-radius: 40%;
     color: whitesmoke;
-    background-color: rgb(88, 142, 223);
+    /* background-color: rgb(88, 142, 223); */
 }
 
 .sidenav {
+    font-family: 'Courier New', Courier, monospace;
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgb(88, 142, 223);
+    background-attachment: fixed;
+    /* background-color: rgb(88, 142, 223); */
+    /* background-color: rgba(255, 255, 255, 0.1); */
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f0ece9;
+    display: block;
+    transition: 0.3s;
+    border: none;
+    /* background: rgb(88, 142, 223); */
+    cursor: pointer;
 }
 
 .sidenav button {
@@ -37,15 +52,20 @@
     display: block;
     transition: 0.3s;
     border: none;
-    background: rgb(88, 142, 223);;
+    /* background: rgb(88, 142, 223); */
     cursor: pointer;
 }
 
 #active-side-item {
     color: lightsalmon;
+    font-weight: bold;
 }
 
 .sidenav button:hover {
+    color: #e7a33c;
+}
+
+.sidenav a:hover {
     color: #e7a33c;
 }
 
@@ -55,11 +75,18 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+    background: rgba(0, 0, 0, 0);
 }
 
 #main {
     transition: margin-left .5s;
     padding: 16px;
+}
+
+#sidebar-logo {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 @media screen and (max-height: 450px) {

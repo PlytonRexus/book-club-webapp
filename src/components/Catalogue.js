@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/Catalogue.css';
 import SearchBar from './SearchBar';
 import { lread } from '../middleware/localStorage';
+import { issueThisBook } from '../utils/Catalogue';
 
 const catalogueURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
@@ -14,8 +15,9 @@ const DisplayBody = (props) => {
                 <tr key={index}>
                     <td>
                         <a 
-                            href={`${catalogueURL}/${book._id}`} 
+                            href={`book?id=${book._id}`} 
                             target="_blank"
+                            rel="noopener noreferrer"
                         >
                             {book.title}
                         </a>
@@ -25,11 +27,16 @@ const DisplayBody = (props) => {
                     <td>{book.edition}</td>
                     <td>{book.year_written}</td>
                     <td>{book.available ? 'Yes' : 'No'}</td>
-                    { lread('bkclbSid') ?
-                        lread('bkclbSid').split(',')[2] === 'true' ? 
-                            <td><button>Edit/Issue</button></td> : 
-                            <td><button>Issue</button></td> : 
-                            null
+                    <td>{book.form}</td>
+                    { lread('bkclbSid') ? 
+                        <td>
+                            <button onClick={(e) => {
+                                e.preventDefault();
+                                issueThisBook(index);
+                            }}>
+                                Issue
+                            </button>
+                        </td> : null 
                     }
                 </tr>
             );
@@ -50,12 +57,8 @@ const DisplayHead = (props) => {
                 <th>Edition</th>
                 <th>Year Written</th>
                 <th>Available</th>
-                {lread('bkclbSid') ? 
-                    (lread('bkclbSid').split(',')[2] === 'true' ? 
-                    <th>Edit/Issue</th> : 
-                    <th>Issue</th> ) : 
-                    null
-                }
+                <th>Format</th>
+                { lread('bkclbSid') ? <th>Issue</th> : null }
             </tr>
         </thead>
     );

@@ -16,8 +16,15 @@ class App extends Component {
     }
 
     componentDidMount = () => {
+        // document.querySelector('body').style.background = `url(${process.env.PUBLIC_URL}/book-background.jpg)`;
+        document.querySelector('body').style.backgroundAttachment = 'fixed';
+        // `url(${process.env.PUBLIC_URL}/book-background.jpg)`
         openSidebar();
-        if(auth()) this.switchAuthState(true);
+        if (auth()) this.switchAuthState(true);
+        if (window.location.pathname === '/catalogue') this.setState({ active: 'Catalogue' });
+        if (window.location.pathname === '/contact') this.setState({ active: 'Contact' });
+        if (window.location.pathname === '/notices') this.setState({ active: 'Notices' });
+        if (window.location.pathname === '/book') this.setState({ active: 'Book' });
     }
     
     changeActivePage = (event, index) => {

@@ -74,7 +74,7 @@ class SidebarAuth extends Component {
                         id="sidebar-auth-submit"
                         onClick={this.runSubmit}
                         className="sidebar-auth-submit"
-                        value="Submit"
+                        value="Log In"
                     />
                     <span className="alert-area"></span>
                 </form>

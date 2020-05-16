@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { swrite } from '../middleware/sessionStorage';
+import '../css/AuthWarning.css';
 
 class AuthWarning extends Component {
     componentDidMount() {
@@ -8,7 +9,7 @@ class AuthWarning extends Component {
 
     render() {
         return (
-            <em><strong>You need to be logged in to access this page.</strong></em>
+            <span className="auth-warning-text">You need to be logged in to access this page.</span>
         );
     }
 }

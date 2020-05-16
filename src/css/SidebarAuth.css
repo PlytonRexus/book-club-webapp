@@ -26,16 +26,15 @@
 
 #sidebar-auth-wrapper {
     border-radius: 5px;
-    background-color: rgb(88, 142, 223);
+    /* background-color: rgb(88, 142, 223); */
     padding-right: 30px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
-    background-color: rgb(88, 142, 223);
     position: relative;
 }
 .sidebar-auth {
-    background-color: rgb(88, 142, 223);
+    /* background-color: rgb(88, 142, 223); */
 }
 
 .sidebar-auth-label {

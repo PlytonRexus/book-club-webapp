@@ -44,7 +44,6 @@ const signin = async (email, password) => {
     if (response.ok) {
         window.objUserDetails = await response.json();
         // lwrite('bkclbSid', [window.objUserDetails._id, window.objUserDetails.email]);
-        document.querySelector('.alert-area').innerHTML = 'Success!';
         return true;
     }
     else {

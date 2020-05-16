@@ -1,0 +1,59 @@
+.book-overlay {
+    color: red;
+    width: 100vw;
+    height: 10vh;
+    display: none;
+}
+
+.book-overlay-text {
+    left: 50vw;
+    height: 50vh;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+/* Main table */
+
+.book-table-wrapper {
+    margin: 10px 0px 50px;
+    box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    padding: 2vw;
+}
+
+.book-table {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.book-table td,
+.book-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.book-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 12px;
+}
+
+.book-table thead th {
+    color: #ffffff;
+    background: #4FC3A1;
+}
+
+
+.book-table thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.book-table tr:nth-child(even) {
+    background: #F8F8F8;
+}

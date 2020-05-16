@@ -8,26 +8,27 @@ import { lread } from '../middleware/localStorage';
 const SideItems = (props) => {
     const items = props.pages.map((item, index) => {
         return (
-        <button 
+        <a 
+            href={item !== 'Home' ? `/${item.toLowerCase()}` : `/`}
             key={index}
             id={item.toLowerCase() === props.active.toLowerCase() ? "active-side-item" : null}
             onClick={(e) => {
-                e.preventDefault();
+                if (window.location.pathname !== '/book') e.preventDefault();
                 props.changeActivePage(null, index)
             }}
         >
             {item}
-        </button>);
+        </a>);
     });
     if (props.authState) {
         items.push(
         <button 
             disabled={true} 
             id="login-state" 
-            style={{ color: 'lightgreen' }} 
+            style={{ color: 'lightgreen', background: `rgba(0, 0, 0, 0)` }} 
             key={1000}
         >
-            <em><strong>{lread('bkclbSid').split(',')[1]}</strong></em>
+            <strong>{lread('bkclbSid').split(',')[1]}</strong>
         </button>);
     }
     return items;
@@ -36,6 +37,7 @@ const SideItems = (props) => {
 const SideHeader = (props) => {
     return (
     <button 
+        id="sidebar-logo"
         href="#home"
         onClick={(e) => {
             e.preventDefault();
@@ -45,7 +47,7 @@ const SideHeader = (props) => {
         <img 
             className="logo" 
             src={process.env.PUBLIC_URL + '/bookclub-logo.png'}
-            alt="Logo resides here."
+            alt="Logo"
         />
     </button>);
 }

@@ -30,7 +30,7 @@ class SearchBar extends Component {
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Search.." 
+                    placeholder="Book, Author, Price, Edition, Year, Availability..." 
                     className="search-bar"
                     id="search-bar"
                     onChange={this.handleChange}

@@ -5,6 +5,8 @@ import Contact from './Contact';
 import Notices from './Notices';
 import Topbar from './Topbar';
 import AuthWarning from './AuthWarning';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Book from './Book';
 
 class MainContent extends Component {
     state = {
@@ -39,16 +41,56 @@ class MainContent extends Component {
         var { authState, active, switchAuthState } = this.props;
         console.log('authState:', authState);
         return (
+            <BrowserRouter>
             <div className="main-content">
                 <Topbar 
                     authState={authState}
                     switchAuthState={switchAuthState}
                 />
-                { active === 'Catalogue' || active === 'Contact' || authState !== false ? 
-                    this.state.pages2[active] : 
-                    this.state.pages2['AuthWarning']
+                <Route exact path='/'>
+                    { active === 'Catalogue' || active === 'Contact' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+
+                {
+                /** 
+                 * This needs to be updated.
+                 * Presently, the complete app can run on any of these links.
+                 * e.preventDefault() is active on the links in the sidebar,
+                 * so, they won't redirect to their hrefs.
+                 * 
+                 * To change, consider anchors in SideItems,
+                 * componentDidMount() in App and Route in MainContent.
+                 */
                 }
+                <Route path={'/catalogue' || '/notices' || '/contact'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/notices'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/contact'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/book'} component={ Book }>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
             </div>
+            </BrowserRouter>
         );
     }
 }
