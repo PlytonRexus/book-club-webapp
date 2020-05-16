@@ -44,7 +44,10 @@ class MainContent extends Component {
                     authState={authState}
                     switchAuthState={switchAuthState}
                 />
-                { authState !== false ? this.state.pages2[active] : this.state.pages2['AuthWarning']}
+                { active === 'Catalogue' || active === 'Contact' || authState !== false ? 
+                    this.state.pages2[active] : 
+                    this.state.pages2['AuthWarning']
+                }
             </div>
         );
     }

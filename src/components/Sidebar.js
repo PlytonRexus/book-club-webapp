@@ -21,7 +21,12 @@ const SideItems = (props) => {
     });
     if (props.authState) {
         items.push(
-        <button disabled={true} id="login-state" style={{ color: 'lightgreen' }}>
+        <button 
+            disabled={true} 
+            id="login-state" 
+            style={{ color: 'lightgreen' }} 
+            key={1000}
+        >
             <em><strong>{lread('bkclbSid').split(',')[1]}</strong></em>
         </button>);
     }

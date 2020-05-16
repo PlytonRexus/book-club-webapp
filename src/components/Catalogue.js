@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import '../css/Catalogue.css';
 import SearchBar from './SearchBar';
+import { lread } from '../middleware/localStorage';
 
 const catalogueURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
-const DisplayBody = props => {
+const DisplayBody = (props) => {
     var body;
+    // console.log(props, lread('bkclbSid').split(',')[2]);
     if (props.books) {
         body = props.books.map((book, index) => {
             return (
                 <tr key={index}>
-                    <td>{book.title}</td>
+                    <td>
+                        <a 
+                            href={`${catalogueURL}/${book._id}`} 
+                            target="_blank"
+                        >
+                            {book.title}
+                        </a>
+                    </td>
                     <td>{book.author}</td>
                     <td>{book.price}</td>
                     <td>{book.edition}</td>
                     <td>{book.year_written}</td>
-                    <td>{book._id}</td>
+                    <td>{book.available ? 'Yes' : 'No'}</td>
+                    { lread('bkclbSid') ?
+                        lread('bkclbSid').split(',')[2] === 'true' ? 
+                            <td><button>Edit/Issue</button></td> : 
+                            <td><button>Issue</button></td> : 
+                            null
+                    }
                 </tr>
             );
         });
@@ -24,7 +39,8 @@ const DisplayBody = props => {
     return <tbody>{body}</tbody>
 };
 
-const DisplayHead = () => {
+const DisplayHead = (props) => {
+    // console.log(props, lread('bkclbSid').split(',')[2]);
     return (
         <thead className="catalogue-header">
             <tr>
@@ -33,7 +49,13 @@ const DisplayHead = () => {
                 <th>Price</th>
                 <th>Edition</th>
                 <th>Year Written</th>
-                <th>Book Club ID</th>
+                <th>Available</th>
+                {lread('bkclbSid') ? 
+                    (lread('bkclbSid').split(',')[2] === 'true' ? 
+                    <th>Edit/Issue</th> : 
+                    <th>Issue</th> ) : 
+                    null
+                }
             </tr>
         </thead>
     );
@@ -44,30 +66,15 @@ class Display extends Component {
         displayHeader: 'free'
     }
 
-    componentDidMount = () => {
-        // const switchClasses = () => {
-        //     var catalogueHeader = document.querySelector("thead");
-        //     var sticky = catalogueHeader.offsetTop;
-        //     if (window.pageYOffset >= sticky) {
-        //         catalogueHeader.classList.add("sticky");
-        //         this.setState({displayHeader: 'sticky'});
-        //     } else {
-        //         catalogueHeader.classList.remove("sticky");
-        //         this.setState({displayHeader: 'free'});
-        //     }
-        // }
-
-        // window.onscroll = switchClasses();
-    }
-
     render() {
         const { books } = this.props;
         return (
             <div className="table-wrapper">
                 <table className="fl-table">
-                    <DisplayHead />
+                    <DisplayHead 
+                    />
                     <DisplayBody 
-                        books={books}
+                        books={ books }
                     />
                 </table>
             </div>
@@ -135,15 +142,21 @@ class Catalogue extends Component {
     }
 
     render = () => {
+        const { authState } = this.props;
         return (
             <div>
                 <header>
                     <h1 className="page-header">
                         Catalogue
-                        <SearchBar filterSearch={this.filterSearch}/>
+                        <SearchBar 
+                            filterSearch={this.filterSearch} 
+                        />
                     </h1>
                 </header>
-                <Display books={this.state.filtered || this.state.results.books}/>
+                <Display 
+                    books={this.state.filtered || this.state.results.books} 
+                    authState={authState} 
+                />
             </div>
         );
     }

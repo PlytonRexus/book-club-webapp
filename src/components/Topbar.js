@@ -41,6 +41,9 @@ class Topbar extends Component {
                 >
                     Signout
                 </prof>
+                <prof
+                    
+                />
                 <prof className="custom profile" onClick={this.toggleMenu}>
                     <div className="dropdown">
                         <img 
