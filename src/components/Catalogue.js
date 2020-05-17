@@ -18,6 +18,7 @@ const DisplayBody = (props) => {
                             href={`book?id=${book._id}`} 
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="catalogue-book-title"
                         >
                             {book.title}
                         </a>
@@ -36,7 +37,9 @@ const DisplayBody = (props) => {
                                 window
                                 .ModalRef
                                 .setState({ toLoad: <IssueBook bookId={book._id} /> });
-                            }}>
+                                }}
+                                className="catalogue-issue-button"
+                            >
                                 Issue
                             </button>
                         </td> : null 
@@ -154,6 +157,7 @@ class Catalogue extends Component {
                     <h1 className="page-header">
                         Catalogue
                         <SearchBar 
+                            placeholder="Book, Author, Price, Edition, Year, Availability..." 
                             filterSearch={this.filterSearch} 
                         />
                     </h1>

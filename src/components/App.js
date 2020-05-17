@@ -18,7 +18,7 @@ class App extends Component {
 
     componentDidMount = () => {
         document.querySelector('body').style.background = 
-            `url(${process.env.PUBLIC_URL}/book-background${Math.floor(Math.random() * 8)}.jpg)`;
+            `url(${process.env.PUBLIC_URL}/book-background${Math.floor(Math.random() * 5)}.jpg)`;
         document.querySelector('body').style.backgroundAttachment = 'fixed';
         openSidebar();
         if (auth()) this.switchAuthState(true);
@@ -28,12 +28,19 @@ class App extends Component {
          * for every route that is created.
          * A simple solution to that is to not prevent defaults of
          * Sidebar links.
-         */
+        */
+
+        /**Real routes */
         if (window.location.pathname === '/catalogue') this.setState({ active: 'Catalogue' });
         if (window.location.pathname === '/contact') this.setState({ active: 'Contact' });
         if (window.location.pathname === '/notices') this.setState({ active: 'Notices' });
+        if (window.location.pathname === '/logs') this.setState({ active: 'Logs' });
+
+        /**Pseuo routes */
         if (window.location.pathname === '/book') this.setState({ active: 'Book' });
-        if (window.location.pathname === '/logs') this.setState({ active: 'Log' });
+        if (window.location.pathname === '/notice') this.setState({ active: 'Notice' });
+        if (window.location.pathname === '/log') this.setState({ active: 'Log' });
+        if (window.location.pathname === '/user') this.setState({ active: 'User' });
     }
     
     changeActivePage = (event, index) => {
@@ -44,7 +51,7 @@ class App extends Component {
             active: active
         });
         
-        if (document.documentElement.clientWidth <= 600) {
+        if (document.documentElement.clientWidth <= 850) {
             closeSidebar();
         }
     }

@@ -1,0 +1,33 @@
+/* Main table */
+
+.user-table-wrapper {
+    margin: 10px 0px 50px;
+    padding: 2vw;
+}
+
+.user-table {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.user-table td,
+.user-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.user-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 12px;
+}
+
+.user-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.8);
+}

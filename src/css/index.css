@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-attachment: fixed;
-  background: url('/book-background2.jpg');
+  background-size: cover;
 }
 
 header {

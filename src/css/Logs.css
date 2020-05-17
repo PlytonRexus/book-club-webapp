@@ -1,0 +1,32 @@
+.logs-issuedTo, .logs-logger, .logs-book {
+    text-decoration: none;
+    padding: 2px;
+    font-weight: bold;
+    color: black;
+    transition-timing-function: ease-in;
+    transition: color 2s, font-weight 0.5s;
+}
+
+.logs-issuedTo:hover, .logs-logger:hover, .logs-book:hover {
+    font-weight: normal;
+    color: red;
+}
+
+.logs-modify-button {
+    border: none;
+    width: 60%;
+    height: 100%;
+    background: #324960;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-timing-function: ease-in;
+    transition: color 1s, background 1.2s, height 1.5s, width 1.5s;
+}
+
+.logs-modify-button:hover {
+    background-color: #fff;
+    color: #324960;
+    width: 98%;
+    height: 98%;
+}

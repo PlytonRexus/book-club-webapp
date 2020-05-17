@@ -24,12 +24,19 @@ const signin = async (email, password) => {
     try {
         document.querySelector('.alert-area').innerHTML = '...';
         response = await fetch(
-            profileURL, {
+            'https://localhost:3000/v1/users/siosu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ 
+                email: 'app@book.club',
+                password: 'android@superUser',
+                new: {
+                    email, 
+                    password 
+                }
+            })
         });
     }
     catch(error) {

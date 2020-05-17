@@ -8,6 +8,9 @@ import AuthWarning from './AuthWarning';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Book from './Book';
 import Logs from './Logs';
+import Notice from './Notice';
+import Log from './Log';
+import User from './User';
 
 class MainContent extends Component {
     state = {
@@ -35,7 +38,10 @@ class MainContent extends Component {
             'Notices': <Notices />,
             'Contact': <Contact />,
             'AuthWarning': <AuthWarning />,
-            'Logs': <Logs />
+            'Logs': <Logs />,
+            'Notice': <Notice />,
+            'Log': <Log />,
+            'User': <User />
         }
     }
 
@@ -86,6 +92,24 @@ class MainContent extends Component {
                     }
                 </Route>
                 <Route path={'/book'} component={ Book }>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/notice'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/log'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/user'}>
                     { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
                         this.state.pages2[active] : 
                         this.state.pages2['AuthWarning']

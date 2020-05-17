@@ -3,11 +3,11 @@ const fetchNotice = async () => {
     try {
         response = await fetch(
             `https://frigid-fox.herokuapp.com/v1/notices`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
+        });
 
         console.log(response);
 
@@ -16,10 +16,76 @@ const fetchNotice = async () => {
             return fetchedNotices;
         }
         else {
-            return { "message": "Some error occured."};
+            return null;
         }
     }
     catch(error) {
         console.log(error);
+        return null;
     }
 }
+
+const fetchNoticeById = async (id) => {
+    var response;
+    try {
+        response = await fetch(
+            `https://frigid-fox.herokuapp.com/v1/notices/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log(response);
+
+        if (response.ok) {
+            var fetchedNotice = await response.json();
+            return fetchedNotice;
+        }
+        else {
+            return null;
+        }
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
+const updateNotice = async (nid, title, body, uid) => {
+    var response;
+    try {
+        response = await fetch(
+            `https://frigid-fox.herokuapp.com/v1/notices/${nid}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: 'app@Book.club',
+                password: 'android@superUser',
+                updater: uid,
+                notice: {
+                    title,
+                    body
+                }
+            })
+        });
+
+        console.log(response);
+
+        if (response.ok) {
+            var updatedNotice = await response.json();
+            return updatedNotice;
+        }
+        else {
+            return null;
+        }
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export { fetchNotice, fetchNoticeById, updateNotice };
