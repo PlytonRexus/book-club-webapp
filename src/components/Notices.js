@@ -1,10 +1,9 @@
 import React from 'react';
-import Burger from './Burger';
+import Header from './Header';
 
 const Notices = () => (
     <div>
-        <Burger />
-        <span>Notices.js</span>
+        <Header header={`Notices`}/>
     </div>
 );
 

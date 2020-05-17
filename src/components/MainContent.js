@@ -7,6 +7,7 @@ import Topbar from './Topbar';
 import AuthWarning from './AuthWarning';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Book from './Book';
+import Logs from './Logs';
 
 class MainContent extends Component {
     state = {
@@ -33,7 +34,8 @@ class MainContent extends Component {
             'Catalogue': <Catalogue />,
             'Notices': <Notices />,
             'Contact': <Contact />,
-            'AuthWarning': <AuthWarning />
+            'AuthWarning': <AuthWarning />,
+            'Logs': <Logs />
         }
     }
 
