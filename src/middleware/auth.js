@@ -2,7 +2,7 @@ import { lread, lremove } from './localStorage';
 import { showOverlay, hideOverlay } from '../utils/SidebarAuth';
 // import { sread, sremove, swrite } from './sessionStorage';
 
-const profileURL = 'https://frigid-fox.herokuapp.com/v1/users/me';
+const profileURL = 'https://frigid-fox.herokuapp.com/v1/users/siosu/now';
 
 const auth = () => {
     var sid = lread('bkclbSid');
@@ -24,7 +24,7 @@ const signin = async (email, password) => {
     try {
         document.querySelector('.alert-area').innerHTML = '...';
         response = await fetch(
-            'https://localhost:3000/v1/users/siosu', {
+            profileURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -46,12 +46,11 @@ const signin = async (email, password) => {
         }, 1000);
         console.log(error);
     }
-    console.log(response);
 
     if (response.ok) {
-        window.objUserDetails = await response.json();
+        const user = await response.json();
+        return user;
         // lwrite('bkclbSid', [window.objUserDetails._id, window.objUserDetails.email]);
-        return true;
     }
     else {
         document.querySelector('.alert-area').innerHTML = 'Try again!';

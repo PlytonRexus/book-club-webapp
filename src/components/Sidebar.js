@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../css/Sidebar.css';
 import SidebarAuth from './SidebarAuth';
-import { auth } from '../middleware/auth';
 import { closeSidebar } from '../utils/Sidebar';
 import { lread } from '../middleware/localStorage';
 
@@ -59,7 +58,6 @@ class Sidebar extends Component {
     }
 
     render() {
-        console.log("auth():", auth());
         const { pages, changeActivePage, authState, switchAuthState, active } = this.props;
         return (
             <div className="sidebar-container">
@@ -81,8 +79,7 @@ class Sidebar extends Component {
                     />
                     { 
                         authState ? 
-                        <div>
-                        </div> : 
+                        <div></div> : 
                         <SidebarAuth 
                             changeActivePage={changeActivePage} 
                             switchAuthState={switchAuthState}

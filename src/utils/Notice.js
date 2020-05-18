@@ -9,8 +9,6 @@ const fetchNotice = async () => {
             }
         });
 
-        console.log(response);
-
         if (response.ok) {
             var fetchedNotices = await response.json();
             return fetchedNotices;
@@ -35,8 +33,6 @@ const fetchNoticeById = async (id) => {
                 'Content-Type': 'application/json'
             }
         });
-
-        console.log(response);
 
         if (response.ok) {
             var fetchedNotice = await response.json();
@@ -71,8 +67,6 @@ const updateNotice = async (nid, title, body, uid) => {
                 }
             })
         });
-
-        console.log(response);
 
         if (response.ok) {
             var updatedNotice = await response.json();

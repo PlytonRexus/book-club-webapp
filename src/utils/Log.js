@@ -18,8 +18,6 @@ const createLog = async (issuedTo, book, createdBy) => {
             })
         })
 
-        console.log(response);
-
         if (response.ok) {
             var createdLog = await response.json();
             return createdLog;
@@ -43,8 +41,6 @@ const fetchLog = async () => {
                 'Content-Type': 'application/json'
             }
         });
-
-        console.log(response);
 
         if (response.ok) {
             var fetchedLogs = await response.json();
@@ -71,11 +67,8 @@ const fetchLogById = async (id) => {
             }
         });
 
-        console.log(response);
-
         if (response.ok) {
             var fetchedLog = await response.json();
-            console.log(fetchedLog);
             return fetchedLog;
         }
         else {
@@ -109,11 +102,8 @@ const updateLog = async (lid, { issuedTo, returnedOn, issuedOn }) => {
             })
         });
 
-        console.log(response);
-
         if (response.ok) {
             var updatedLog = await response.json();
-            console.log(updatedLog);
             return updatedLog;
         }
         else {

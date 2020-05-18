@@ -128,7 +128,6 @@ class Logs extends Component {
             return;
         }
         var regex = new RegExp(`${query}`, 'gi');
-        console.log(query);
         var results = this.state.logs;
         var filtered = results.filter((log) => {
             if (regex.test(log.book)) {
@@ -145,7 +144,6 @@ class Logs extends Component {
                 return false;
             }
         });
-        console.log(filtered);
         this.setState({filtered: filtered});
     }
 

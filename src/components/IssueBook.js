@@ -12,7 +12,6 @@ class IssueBook extends Component {
 
     componentDidMount = async () => {
         const users = await fetchUser('all');
-        console.log(users);
         const issuerSelector = document.querySelector('.issuer');
         users.users.forEach((user) => {
             if (user._id === lread('bkclbSid').split(',')[1]) return;
@@ -39,7 +38,6 @@ class IssueBook extends Component {
         const bookIdToIssue = document.querySelector('.bookId').value;
         const createdBy = lread('bkclbSid').split(',')[1];
         const createdLog = await createLog(issuer, bookIdToIssue, createdBy);
-        console.log(bookIdToIssue, issuer, createdBy);
         window
         .ModalRef
         .setState({ toLoad: <div>{JSON.stringify(createdLog)}</div> });

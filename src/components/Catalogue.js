@@ -105,7 +105,6 @@ class Catalogue extends Component {
             return this.fetchBooks();
         }
         var regex = new RegExp(`${query}`, 'gi');
-        console.log(query);
         var results = this.state.results.books;
         var filtered = results.filter((book, ind) => {
             if (regex.test(book.title)) {
@@ -122,7 +121,6 @@ class Catalogue extends Component {
                 return false;
             }
         });
-        console.log(filtered);
         this.setState({filtered: filtered});
     }
 
@@ -140,7 +138,6 @@ class Catalogue extends Component {
             this.setState({
                 results: obj
             });
-            console.log(this.state.results);
         }
         else console.log('HTTP-Error: ' + response.status);
     }

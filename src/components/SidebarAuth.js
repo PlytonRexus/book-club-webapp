@@ -22,14 +22,13 @@ class SidebarAuth extends Component {
 
     runSubmit = async (event) => {
         showOverlay('Getting you in!');
-        event.preventDefault();
-        const result = await signin(this.state.email, this.state.password);
-        if (result) {
+        // event.preventDefault();
+        const user = await signin(this.state.email, this.state.password);
+        if (user) {
             const { switchAuthState } = this.props;
-            const user = window.objUserDetails;
-            lwrite('bkclbSid', [user._id, user.email, user.admin, user.superUser]);
+            lwrite('bkclbSid', [user.user._id, user.user.email, user.user.admin, user.user.superUser]);
             switchAuthState(true);
-            if (document.documentElement.clientWidth < 600) {
+            if (document.documentElement.clientWidth < 800) {
                 closeSidebar();
             }
         }
@@ -74,7 +73,7 @@ class SidebarAuth extends Component {
                         id="sidebar-auth-submit"
                         onClick={this.runSubmit}
                         className="sidebar-auth-submit"
-                        value="Log In"
+                        value="Sign In/Sign Up"
                     />
                     <span className="alert-area"></span>
                 </form>

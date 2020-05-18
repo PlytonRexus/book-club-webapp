@@ -17,14 +17,11 @@ const fetchUser = async (endpoint) => {
             }
         );
 
-        console.log(response);
-
         if (response.ok) {
             var fetchedUsers = await response.json();
             return fetchedUsers;
         }
         else {
-            console.log(`Some error occured.`);
             return null;
         }
     }

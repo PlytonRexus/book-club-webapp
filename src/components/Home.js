@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Table from './Table';
 import Form from './Form';
 import Counter from './Counter';
-import { auth } from '../middleware/auth';
 import { lread } from '../middleware/localStorage';
 import Header from './Header';
 
@@ -83,7 +82,6 @@ class Home extends Component {
     }
     
     render = () => { 
-        console.log('auth():', auth());
         return <this.HomeXML />;
     }
 }

@@ -47,7 +47,6 @@ class MainContent extends Component {
 
     render = () => {
         var { authState, active, switchAuthState } = this.props;
-        console.log('authState:', authState);
         return (
             <BrowserRouter>
             <div className="main-content">

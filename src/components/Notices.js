@@ -61,7 +61,6 @@ class Notices extends Component {
         this.setState({
             notices: notices.notices
         });
-        console.log(notices.notices);
     }
 
     render() {

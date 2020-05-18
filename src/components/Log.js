@@ -90,12 +90,11 @@ class LogEditor extends Component {
         const { id, issuedOn, issuedTo, returnedOn } = this.state;
         var lio = issuedOn ? Date.parse(issuedOn) : this.props.log.issuedOn;
         var lro = returnedOn ? Date.parse(returnedOn) : this.props.log.issuedOn;
-        const updatedLog = await updateLog(id, { 
+        await updateLog(id, { 
             issuedOn: lio, 
             issuedTo: issuedTo, 
             returnedOn: lro
         });
-        console.log(updatedLog);
         document.querySelector('.log-editor-alert-area').innerHTML = 'Saved.';
         document.querySelector('.log-editor-form-issuedOn').disabled = false;
         document.querySelector('.log-editor-form-returnedOn').disabled = false;
