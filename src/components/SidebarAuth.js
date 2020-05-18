@@ -25,9 +25,9 @@ class SidebarAuth extends Component {
         event.preventDefault();
         const user = await signin(this.state.email, this.state.password);
         if (user) {
-            // const { switchAuthState } = this.props;
+            const { switchAuthState } = this.props;
             lwrite('bkclbSid', [user.user._id, user.user.email, user.user.admin, user.user.superUser]);
-            // switchAuthState(true);
+            switchAuthState(true);
             if (document.documentElement.clientWidth < 800) {
                 closeSidebar();
             }

@@ -12,7 +12,7 @@ class App extends Component {
         this.state = {
             pages: ['Home', 'Catalogue', 'Notices', 'Logs', 'Contact'],
             active: 'Home',
-            authState: true
+            authState: false
         }
     }
 
