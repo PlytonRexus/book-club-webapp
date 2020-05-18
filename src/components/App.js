@@ -10,7 +10,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            pages: ['Home', 'Catalogue', 'Notices', 'Logs', 'Contact'],
+            pages: ['Home', 'Catalogue', 'Notices', 'Logs', 'Members', 'Contact'],
             active: 'Home',
             authState: false
         }
@@ -35,6 +35,7 @@ class App extends Component {
         if (window.location.pathname === '/contact') this.setState({ active: 'Contact' });
         if (window.location.pathname === '/notices') this.setState({ active: 'Notices' });
         if (window.location.pathname === '/logs') this.setState({ active: 'Logs' });
+        if (window.location.pathname === '/members') this.setState({ active: 'Members' });
 
         /**Pseuo routes */
         if (window.location.pathname === '/book') this.setState({ active: 'Book' });

@@ -80,7 +80,7 @@ const DisplayBody = (props) => {
 
 const DisplayHead = (props) => {
     return (
-        <thead className="catalogue-header">
+        <thead className="logs-header">
             <tr>
                 <th>Issued On</th>
                 <th>Issuer</th>

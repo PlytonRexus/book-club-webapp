@@ -1,0 +1,20 @@
+.users-name, .users-email, .users-id {
+    text-decoration: none;
+    padding: 2px;
+    font-weight: bold;
+    color: black;
+    transition-timing-function: ease-in;
+    transition: color 2s, font-weight 0.5s;
+}
+
+.users-name:hover, .users-email:hover, .users-id:hover {
+    font-weight: normal;
+    color: red;
+}
+
+.users-modify-button:hover {
+    background-color: #fff;
+    color: #324960;
+    width: 98%;
+    height: 98%;
+}

@@ -11,6 +11,7 @@ import Logs from './Logs';
 import Notice from './Notice';
 import Log from './Log';
 import User from './User';
+import Users from './Users';
 
 class MainContent extends Component {
     state = {
@@ -39,6 +40,7 @@ class MainContent extends Component {
             'Contact': <Contact />,
             'AuthWarning': <AuthWarning />,
             'Logs': <Logs />,
+            'Members': <Users />,
             'Notice': <Notice />,
             'Log': <Log />,
             'User': <User />
@@ -109,6 +111,12 @@ class MainContent extends Component {
                     }
                 </Route>
                 <Route path={'/user'}>
+                    { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
+                        this.state.pages2[active] : 
+                        this.state.pages2['AuthWarning']
+                    }
+                </Route>
+                <Route path={'/members'}>
                     { active === 'Catalogue' || active === 'Notices' || authState !== false ? 
                         this.state.pages2[active] : 
                         this.state.pages2['AuthWarning']

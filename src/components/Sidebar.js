@@ -19,6 +19,23 @@ const SideItems = (props) => {
             {item}
         </a>);
     });
+    items.push(
+        <div key="sidebar-social-wrapper">
+            <a
+                id="sidebar-social"
+                href="https://www.facebook.com/bookclubiitismdhanbad"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img 
+                    src={process.env.PUBLIC_URL + '/facebook-logo.svg'}
+                    height="40px"
+                    width="40px"
+                    alt="/bookclubiitismdhanbad"
+                />
+            </a>
+        </div>
+    );
     if (props.authState) {
         items.push(
         <button 

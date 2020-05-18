@@ -44,7 +44,7 @@ class SidebarAuth extends Component {
                 <div className='sidebar-auth-overlay'>
                     <div className='sidebar-auth-overlay-text'></div>
                 </div>
-                <form className="sidebar-auth">
+                <form className="sidebar-auth" autoComplete={`off`}>
                     {/* <label className="sidebar-auth-label">Email</label> */}
                     <input
                         type="text"
@@ -55,6 +55,7 @@ class SidebarAuth extends Component {
                         required={true}
                         className="sidebar-auth-email"
                         placeholder="Email"
+                        autoComplete={`off`}
                     />
                     {/* <label className="sidebar-auth-label">Password</label> */}
                     <input
@@ -66,6 +67,7 @@ class SidebarAuth extends Component {
                         required={true}
                         className="sidebar-auth-password"
                         placeholder="Password"
+                        autoComplete={`off`}
                     />
                     <input
                         type="submit"
