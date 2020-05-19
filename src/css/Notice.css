@@ -6,24 +6,30 @@
 .notice-editor-info {
     color: red;
     border-radius: 10px;
+    margin: 5px;
 }
 
 .notice-editor-form {
-    padding: 1%;
+    padding: 1.2%;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
 }
 
 .notice-editor-form-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
     border-radius: 10px;
-    padding: 1%;
+    padding: 1.2%;
+    width: 60%;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .notice-editor-form-body {
     height: 250px;
-    width: 98%;
+    width: 95%;
     border-radius: 10px;
-    padding: 1%;
+    padding: 1.2%;
 }
 
 .notice-editor-form-submit {

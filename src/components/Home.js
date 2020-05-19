@@ -10,7 +10,7 @@ class Home extends Component {
     render = () => { 
         return (
             <div>
-                <Header header={`Hello, ${lread('bkclbSid').split(',')[1]}!`}/>
+                <Header header={`Hello, ${lread('bkclbSid') ? lread('bkclbSid').split(',')[1] : `Guest`}!`}/>
                 <div className="home-card">
                     <div className="home-content">
                     <div>

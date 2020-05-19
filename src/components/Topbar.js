@@ -34,6 +34,21 @@ class Topbar extends Component {
                     // switchSidebar={switchSidebar}
                 />
                 <span href="#home" className="page-title">Book Club</span>
+                <span id="topbar-social-wrapper">
+                    <a
+                        id="topbar-social"
+                        href="https://www.facebook.com/bookclubiitismdhanbad"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img 
+                            src={process.env.PUBLIC_URL + '/facebook-logo.svg'}
+                            height="32px"
+                            width="32px"
+                            alt="/bookclubiitismdhanbad"
+                        />
+                    </a>
+                </span>
                 <prof 
                     className="logout-btn" 
                     id="logout-btn"
@@ -41,9 +56,6 @@ class Topbar extends Component {
                 >
                     Signout
                 </prof>
-                <prof
-                    
-                />
                 <prof className="custom profile" onClick={this.toggleMenu}>
                     <div className="dropdown">
                         <img 

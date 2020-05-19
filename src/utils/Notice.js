@@ -82,4 +82,38 @@ const updateNotice = async (nid, title, body, uid) => {
     }
 }
 
-export { fetchNotice, fetchNoticeById, updateNotice };
+const createNotice = async (title, body, uid) => {
+    var response;
+    try {
+        response = await fetch(
+            `https://frigid-fox.herokuapp.com/v1/notices`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: 'app@Book.club',
+                password: 'android@superUser',
+                createdBy: uid,
+                notice: {
+                    title,
+                    body
+                }
+            })
+        });
+
+        if (response.ok) {
+            var createdNotice = await response.json();
+            return createdNotice;
+        }
+        else {
+            return null;
+        }
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export { fetchNotice, fetchNoticeById, updateNotice, createNotice };

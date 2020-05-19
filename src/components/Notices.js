@@ -56,6 +56,7 @@ class Notices extends Component {
     state = {
         notices: null
     }
+
     componentDidMount = async () => {
         const notices = await fetchNotice();
         this.setState({
@@ -63,10 +64,18 @@ class Notices extends Component {
         });
     }
 
+    noticeCreator = (e) => {
+        e.preventDefault();
+        window.open('/notice');
+    }
+
     render() {
         return (
             <div className="notices-wrapper">
                 <Header header={`Notices`}/>
+                <button onClick={this.noticeCreator} className="notices-creator">
+                    Create New Notice
+                </button>
                 <NoticeCards notices={this.state.notices}/>
             </div>
         );

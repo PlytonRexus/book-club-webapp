@@ -9,6 +9,8 @@
 
 #search-bar {
     text-align: center;
+    padding: 10px;
+    border-radius: 10px;
     width: 50vw;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;

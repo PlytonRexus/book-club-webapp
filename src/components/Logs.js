@@ -57,7 +57,7 @@ const DisplayBody = (props) => {
                      */
                     }
 
-                    { lread('bkclbSid').split(',')[2] ? 
+                    { lread('bkclbSid') ? (lread('bkclbSid').split(',')[2] === 'true' ? 
                         <td>
                             <button
                                 onClick={(e) => {
@@ -68,7 +68,7 @@ const DisplayBody = (props) => {
                             >
                                 Modify
                             </button>
-                        </td> : null 
+                        </td> : null) : null
                     }
                 </tr>
             );
@@ -87,8 +87,8 @@ const DisplayHead = (props) => {
                 <th>Logger</th>
                 <th>Book</th>
                 <th>Returned On</th>
-                { lread('bkclbSid').split(',')[2] === 'true' ? 
-                    <th className="logs-modify-button">Modify</th> : 
+                { lread('bkclbSid') ? (lread('bkclbSid').split(',')[2] === 'true' ? 
+                    <th className="logs-modify-button">Modify</th> : null) : 
                     null 
                 }
             </tr>

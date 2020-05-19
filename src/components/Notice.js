@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchNoticeById, updateNotice } from "../utils/Notice";
+import { fetchNoticeById, updateNotice, createNotice } from "../utils/Notice";
 import { lread } from '../middleware/localStorage';
 import '../css/Notice.css';
 import { launchModal } from '../utils/Modal';
@@ -15,6 +15,7 @@ class FormattingInfo extends Component {
                         <li>{`<i></i>`} makes text italic.</li>
                         <li>{`<code></code>`} formats text as code.</li>
                         <li>{`<u></u>`} underlines text.</li>
+                        <li>{`<img></img>`} adds images.</li>
                     </ul>
                 </p>
             </div>
@@ -46,7 +47,8 @@ class NoticeEditor extends Component {
         document.querySelector('.notice-editor-form-submit').disabled = true;
         const uid = lread('bkclbSid').split(',')[0];
         const { id, title, body } = this.state;
-        await updateNotice(id, title, body, uid);
+        if (id.length > 0) await updateNotice(id, title, body, uid);
+        else await createNotice(title, body, lread('bkclbSid').split(',')[0]);
         document.querySelector('.notice-editor-alert-area').innerHTML = 'Saved.';
         document.querySelector('.notice-editor-form-title').disabled = false;
         document.querySelector('.notice-editor-form-body').disabled = false;
@@ -66,6 +68,8 @@ class NoticeEditor extends Component {
                         className="notice-editor-form-title" 
                         onChange={this.handleChange}
                         defaultValue={this.props.notice.title}
+                        placeholder="Notice Title"
+                        required={true} 
                     />
                     <textarea 
                         name="body" 
@@ -73,6 +77,8 @@ class NoticeEditor extends Component {
                         className="notice-editor-form-body"
                         onChange={this.handleChange}
                         defaultValue={this.props.notice.body}
+                        placeholder="Notice Body"
+                        required={true}
                     >
                     </textarea>
                     <span className="notice-editor-alert-area"></span>
@@ -96,8 +102,15 @@ class Notice extends Component {
         window.location.search.replace('?', '').split('&').forEach((val, ind) => {
             params[val.split('=')[0]] = val.split('=')[1];
         });
-        this.state = {
-            id: params.id
+        if(params.id)  {
+            this.state = {
+                id: params.id
+            }
+        }
+        else {
+            this.state = {
+                id: ''
+            }
         }
     }
 
@@ -106,9 +119,14 @@ class Notice extends Component {
         window
         .ModalRef
         .setState({ toLoad: <FormattingInfo /> });
-        var fetchedNotice= await fetchNoticeById(this.state.id);
-        if (fetchedNotice) {
-            this.setState({ notice: fetchedNotice });
+        if(this.state.id.length > 0) {
+            var fetchedNotice= await fetchNoticeById(this.state.id);
+            if (fetchedNotice) {
+                this.setState({ notice: fetchedNotice });
+            }
+        }
+        else {
+            this.setState({ notice: { title: '', body: '' } });
         }
     }
 

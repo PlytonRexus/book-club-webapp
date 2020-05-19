@@ -4,4 +4,9 @@
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
     padding: 15px;
+    text-align: center;
+}
+
+.page-header-text {
+    padding: 10px;
 }
