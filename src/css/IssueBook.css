@@ -15,8 +15,22 @@
     height: 40px;
     border-radius: 5px;
     border: 1px solid white;
+    padding: 5px;
 }
 
 #issuer-you {
     background-color: yellow;
+}
+
+.bookId {
+    text-align: center;
+    width: 98%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.issue-book-status {
+    padding: 5px;
+    float: right;
 }

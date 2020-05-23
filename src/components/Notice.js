@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { fetchNoticeById, updateNotice, createNotice } from "../utils/Notice";
+import { fetchNoticeById, updateNotice, createNotice, deleteNotice } from "../utils/Notice";
 import { lread } from '../middleware/localStorage';
 import '../css/Notice.css';
 import { launchModal } from '../utils/Modal';
+import Header from './Header';
 
 class FormattingInfo extends Component {
     render = () => {
@@ -11,11 +12,12 @@ class FormattingInfo extends Component {
                 <h4>You can use basic HTML syntax to format the notice body. For example:</h4>
                 <p>
                     <ul>
-                        <li>{`<b></b>`} makes text bold. </li>
-                        <li>{`<i></i>`} makes text italic.</li>
-                        <li>{`<code></code>`} formats text as code.</li>
-                        <li>{`<u></u>`} underlines text.</li>
-                        <li>{`<img></img>`} adds images.</li>
+                        <li><code>{`<b></b>`}</code> makes text bold. </li>
+                        <li><code>{`<i></i>`}</code> makes text italic.</li>
+                        <li><code>{`<code></code>`}</code> formats text as code.</li>
+                        <li><code>{`<u></u>`}</code> underlines text.</li>
+                        <li><code>{`<img src=${`image-url`} />`}</code> adds images.</li>
+                        <li> In fact, you can also add youtube iframes. Use the share button under a video to get an HTML Snippet.</li>
                     </ul>
                 </p>
             </div>
@@ -29,6 +31,13 @@ class NoticeEditor extends Component {
         id: this.props.id,
         title: '',
         body: ''
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            title: this.props.notice.title,
+            body: this.props.notice.body    
+        });
     }
 
     handleChange = event => {
@@ -45,6 +54,7 @@ class NoticeEditor extends Component {
         document.querySelector('.notice-editor-form-title').disabled = true;
         document.querySelector('.notice-editor-form-body').disabled = true;
         document.querySelector('.notice-editor-form-submit').disabled = true;
+        document.querySelector('.notice-editor-form-delete').disabled = true;
         const uid = lread('bkclbSid').split(',')[0];
         const { id, title, body } = this.state;
         if (id.length > 0) await updateNotice(id, title, body, uid);
@@ -53,14 +63,38 @@ class NoticeEditor extends Component {
         document.querySelector('.notice-editor-form-title').disabled = false;
         document.querySelector('.notice-editor-form-body').disabled = false;
         document.querySelector('.notice-editor-form-submit').disabled = false;
+        document.querySelector('.notice-editor-form-delete').disabled = false;
+    }
+
+    runDelete = async (e) => {
+        e.preventDefault();
+        document.querySelector('.notice-editor-alert-area').innerHTML = 'Deleting...';
+        document.querySelector('.notice-editor-form-title').disabled = true;
+        document.querySelector('.notice-editor-form-body').disabled = true;
+        document.querySelector('.notice-editor-form-submit').disabled = true;
+        document.querySelector('.notice-editor-form-delete').disabled = true;
+        const { id } = this.state;
+        if (id.length > 0) await deleteNotice(id);
+        document.querySelector('.notice-editor-alert-area').innerHTML = 'Deleted.';
+        document.querySelector('.notice-editor-form-title').disabled = false;
+        document.querySelector('.notice-editor-form-body').disabled = false;
+        document.querySelector('.notice-editor-form-submit').disabled = false;
+        document.querySelector('.notice-editor-form-delete').disabled = true;
+        launchModal();
+        window.ModalRef.setState({
+            toLoad: <div><em>Notice deleted successfully.</em><br />
+            You can continue editing to create a new notice or close this tab to discard changes.</div>
+        })
     }
 
     render = () => {
+        document.title = "Notice Editor";
         return (
             <div className="notice-editor-wrapper">
+                <Header header={`Notice Editor`}/>
                 <form className="notice-editor-form">
                     <p className="notice-editor-info">
-                        An edit cannot be reverted. Be careful when you make any changes.
+                        An edit cannot be reverted. Only admins can make changes to notices.
                     </p>
                     <input 
                         type="text" 
@@ -82,13 +116,32 @@ class NoticeEditor extends Component {
                     >
                     </textarea>
                     <span className="notice-editor-alert-area"></span>
+                    {
+                        lread('bkclbSid') ? 
+                            lread('bkclbSid').split(',')[2] === 'true' ?
+                                <div>
+                                    <hr />
+                                    <button 
+                                        className="notice-editor-form-submit"
+                                        onClick={this.runSubmit}
+                                    >
+                                        Save
+                                    </button>
+                                    <button 
+                                        className="notice-editor-form-delete"
+                                        onClick={this.runDelete}
+                                    >
+                                        Delete
+                                    </button>
+                                </div> : null :
+                            null
+                    }
                     <hr />
-                    <button 
-                        className="notice-editor-form-submit"
-                        onClick={this.runSubmit}
+                    <div 
+                        className="notice-preview-area" 
+                        dangerouslySetInnerHTML={{__html: this.state.body}}
                     >
-                        Save
-                    </button>
+                    </div>
                 </form>
             </div>
         );

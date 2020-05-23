@@ -43,11 +43,13 @@ class MainContent extends Component {
             'Members': <Users />,
             'Notice': <Notice />,
             'Log': <Log />,
-            'User': <User />
+            'User': <User />,
+            'Book': <Book />
         }
     }
 
     render = () => {
+        document.title = "Book Club - Home";
         var { authState, active, switchAuthState } = this.props;
         return (
             <BrowserRouter>
@@ -92,7 +94,7 @@ class MainContent extends Component {
                         this.state.pages2['AuthWarning']
                     }
                 </Route>
-                <Route path={'/book'} component={ Book }>
+                <Route path={'/book'}>
                     { active === 'Catalogue' || active === 'Notices' || active === 'Home' || authState !== false ? 
                         this.state.pages2[active] : 
                         this.state.pages2['AuthWarning']

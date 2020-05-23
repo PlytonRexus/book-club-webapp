@@ -182,6 +182,7 @@ class Log extends Component {
         var fetchedLog= await fetchLogById(this.state.id);
         if (fetchedLog) {
             this.setState({ log: fetchedLog});
+            document.title = 'Log Editor';
         }
     }
 

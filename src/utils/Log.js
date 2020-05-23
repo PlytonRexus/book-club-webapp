@@ -1,10 +1,12 @@
 import { lread } from "../middleware/localStorage";
+const logsURL = `https://frigid-fox.herokuapp.com/v1/logs`;
 
 const createLog = async (issuedTo, book, createdBy) => {
     var response;
+    console.log(book, issuedTo, createdBy);
     try {
         response = await fetch(
-            `https://frigid-fox.herokuapp.com/v1/logs`, {
+            logsURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

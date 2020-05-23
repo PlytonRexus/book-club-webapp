@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../css/SidebarAuth.css'
 import { signin } from '../middleware/auth';
 import { lwrite } from '../middleware/localStorage';
-import { showOverlay } from '../utils/SidebarAuth';
 import { closeSidebar } from '../utils/Sidebar';
 // import { sread } from '../middleware/sessionStorage';
 
@@ -20,9 +19,20 @@ class SidebarAuth extends Component {
         this.setState({ [name]: value, });
     }
 
+    showStatus = (text) => {
+        document.querySelector('.alert-area').innerHTML = text;
+    }
+
+    switchFieldAccess = (value) => {
+        document.querySelector('.sidebar-auth-email').disabled = value;
+        document.querySelector('.sidebar-auth-password').disabled = value;
+        document.querySelector('.sidebar-auth-submit').disabled = value;
+    }
+
     runSubmit = async (event) => {
-        showOverlay('Getting you in!');
         event.preventDefault();
+        this.switchFieldAccess(true);
+        this.showStatus('Getting you in!');
         const user = await signin(this.state.email, this.state.password);
         if (user) {
             const { switchAuthState } = this.props;
@@ -31,8 +41,12 @@ class SidebarAuth extends Component {
             if (document.documentElement.clientWidth < 800) {
                 closeSidebar();
             }
+            // this.switchFieldAccess(false);
+            // this.showStatus('Success!');
         }
         else {
+            this.switchFieldAccess(false);
+            this.showStatus('Something was wrong; maybe your credentials?(!)');
             this.setState(this.initialState);
         }
     }
@@ -41,9 +55,6 @@ class SidebarAuth extends Component {
         const { email, password } = this.state;
         return (
             <div id="sidebar-auth-wrapper">
-                <div className='sidebar-auth-overlay'>
-                    <div className='sidebar-auth-overlay-text'></div>
-                </div>
                 <form className="sidebar-auth" autoComplete={`off`}>
                     {/* <label className="sidebar-auth-label">Email</label> */}
                     <input

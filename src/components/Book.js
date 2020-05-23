@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { fetchBook } from "../utils/Book";
 import '../css/Book.css';
+import Header from './Header';
 
 const bookURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
 const BookDetailsBody = props => {
     const body = Object.keys(props.book).map((property) => {
-        if (property === 'cover') return null;
+        const invalid = ['cover', '__v'];
+        if (invalid.includes(property)) return null;
         return (
             <tr key={ property }>
-                <th key={ property }>{ property }</th>
+                <th key={ property }>{ property.toLocaleUpperCase() }</th>
                 <td>
                     <textarea disabled={true}>
-                        { JSON.stringify(props.book[property]) }
+                        { JSON.stringify(props.book[property]).replace(/"/g, "") }
                     </textarea>
                 </td>
             </tr>
@@ -21,8 +23,14 @@ const BookDetailsBody = props => {
     return (
         <tbody>
             {body}
-            <button className="edit-button"> Edit </button>
-            <button className="save-button"> Save </button>
+            <tr>
+                <td>
+                    <button className="edit-button"> Edit </button>
+                </td>
+                <td>
+                    <button className="save-button"> Save </button>
+                </td>
+            </tr>
         </tbody>
     );
 };
@@ -66,6 +74,7 @@ class Book extends Component {
         var fetchedBook = await fetchBook(bookURL, this.state.id);
         if (fetchedBook) {
             this.setState({ book: fetchedBook });
+            window.title = fetchedBook.title;
         }
     }
 
@@ -75,6 +84,7 @@ class Book extends Component {
             <div className="book-overlay">
                 <div className="book-overlay-text"></div>
             </div>
+            <Header header="Details" />
             { this.state.book ? <BookDetails book={this.state.book}/> : null }
         </div>
         );

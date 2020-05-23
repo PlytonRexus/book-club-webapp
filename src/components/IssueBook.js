@@ -3,6 +3,7 @@ import '../css/IssueBook.css';
 import { lread } from '../middleware/localStorage';
 import { fetchUser } from '../utils/User';
 import { createLog } from '../utils/Log';
+import { closeModal } from '../utils/Modal';
 
 class IssueBook extends Component {
     state = {
@@ -16,10 +17,10 @@ class IssueBook extends Component {
         users.users.forEach((user) => {
             if (user._id === lread('bkclbSid').split(',')[1]) return;
             var option = document.createElement('option');
-            var text = user.email;
+            var text = user.email + '-' + user._id;
+            option.setAttribute('value', user.email + '-' + user._id);
             option.textContent = text;
             option.setAttribute('class', 'issuer-option');
-            option.setAttribute('value', user._id);
             issuerSelector.appendChild(option);
         });
     }
@@ -34,13 +35,16 @@ class IssueBook extends Component {
 
     runSubmit = async (event) => {
         event.preventDefault();
-        const issuer = document.querySelector('.issuer').value;
-        const bookIdToIssue = document.querySelector('.bookId').value;
-        const createdBy = lread('bkclbSid').split(',')[1];
-        const createdLog = await createLog(issuer, bookIdToIssue, createdBy);
-        window
-        .ModalRef
-        .setState({ toLoad: <div>{JSON.stringify(createdLog)}</div> });
+        document.querySelector('.submitIssue').disabled = true;
+        document.querySelector('.issue-book-status').innerHTML = 'Creating...';
+        const issuer = this.state.issuer || document.querySelector('.issuer').value.split('-')[1];
+        const bookIdToIssue = this.state.bookId || document.querySelector('.bookId').value;
+        const createdBy = lread('bkclbSid').split(',')[0];
+        await createLog(issuer, bookIdToIssue, createdBy);
+        document.querySelector('.issue-book-status').innerHTML = 'Created.';
+        document.querySelector('.submitIssue').disabled = false;
+        setTimeout(closeModal, 1000);
+
     }
 
     render = () => {
@@ -66,7 +70,7 @@ class IssueBook extends Component {
                         required={true} 
                     >
                         <option 
-                            value={lread('bkclbSid').split(',')[1]} 
+                            value={`${lread('bkclbSid').split(',')[1]}-${lread('bkclbSid').split(',')[0]}`} 
                             id="issuer-you"
                             className="issuer-option"
                         >
@@ -74,6 +78,7 @@ class IssueBook extends Component {
                         </option>
                     </select>
                     <hr />
+                    <span className="issue-book-status"></span>
                     <button 
                         className="submitIssue" 
                         onClick={this.runSubmit} 

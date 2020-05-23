@@ -31,3 +31,59 @@
 .user-table tr:nth-child(even) {
     background: rgba(255, 255, 255, 0.8);
 }
+
+.user-edit-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    width: 80%;
+    cursor: pointer;
+    transition-timing-function: ease-in;
+    transition: background 1.5s, color , width 1s;
+}
+
+.user-save-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    width: 40%;
+    cursor: pointer;
+    transition-timing-function: ease-in;
+    transition: background 1.5s, color 1s, width 10s;
+}
+
+.avatar-save-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    width: 40%;
+    cursor: pointer;
+    transition-timing-function: ease-in;
+    transition: background 1.5s, color 1s, width 10s;
+}
+
+.user-edit-button:hover, .user-save-button:hover, .avatar-save-button:hover {  
+    background: orangered;
+    color: #f8f8f8;
+    width: 50%;
+}
+
+.user-fields-textarea {
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
+}
+
+.user-avatar, .user-avatar-fallback {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+
+.user-avatar-wrapper {
+    text-align: center;
+}

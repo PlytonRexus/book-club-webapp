@@ -29,7 +29,7 @@ const DisplayBody = (props) => {
                     </td>
                     <td>
                         <a 
-                            href={`/book?id=${user._id}`} 
+                            href={`/user?id=${user._id}`} 
                             target="_blank"
                             rel="noopener noreferrer"
                             className="users-email"
@@ -101,10 +101,12 @@ class Users extends Component {
 
     filterSearch = async (query) => {
         if (query === '') {
-            await this.setUsers();
+            this.setState({
+                users: this.state.all
+            });
             return;
         }
-        var regex = new RegExp(`${query}`, 'gi');
+        var regex = new RegExp(query, 'i');
         var results = this.state.users;
         var filtered = results.filter((user) => {
             if (regex.test(user.name)) {
@@ -139,8 +141,10 @@ class Users extends Component {
             .setState({ toLoad: <div>Some error occured.</div>});
         }
         this.setState({
-            users: users.users
+            users: users.users,
+            all: users.users
         });
+        document.title = "Members";
     }
 
     render = () => {

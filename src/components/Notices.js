@@ -62,6 +62,7 @@ class Notices extends Component {
         this.setState({
             notices: notices.notices
         });
+        document.title = "Notices";
     }
 
     noticeCreator = (e) => {

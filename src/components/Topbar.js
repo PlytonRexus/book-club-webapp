@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/Topbar.css';
 import Burger from './Burger';
 import { signout } from '../middleware/auth';
+import { lread } from '../middleware/localStorage';
 
 class Topbar extends Component {
     state ={
@@ -61,7 +62,12 @@ class Topbar extends Component {
                         <img 
                             alt="avatar" 
                             className="avatar" 
-                            src={process.env.PUBLIC_URL + '/bookclub-logo.png'}
+                            src={
+                                lread(`bkclbSid`) ?
+                                 `https://frigid-fox.herokuapp.com/v1/users/${lread(`bkclbSid`).split(',')[0]}/avatar` : 
+                                 '/bookclub-logo.png'
+                                }
+                            onError={() => {document.querySelector('.avatar').src = `/bookclub-logo.png`}}
                         />
                     </div>
                 </prof>

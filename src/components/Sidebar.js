@@ -21,14 +21,17 @@ const SideItems = (props) => {
     });
     if (props.authState) {
         items.push(
-        <button 
+        <a 
             disabled={true} 
             id="login-state" 
-            style={{ color: 'lightgreen', background: `rgba(0, 0, 0, 0)` }} 
+            style={{ color: 'lightgreen', background: `rgba(0, 0, 0, 0)`, fontSize: 'smaller' }} 
             key={1000}
+            href={`/user?id=${lread('bkclbSid').split(',')[0]}`}
+            target="_blank"
+            rel="noopener noreferrer"
         >
             <strong>{lread('bkclbSid').split(',')[1]}</strong>
-        </button>);
+        </a>);
     }
     return items;
 }

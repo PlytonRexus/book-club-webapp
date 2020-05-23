@@ -7,6 +7,12 @@ class Modal extends Component {
         toLoad: null
     }
     render() {
+        window.addEventListener("keydown", (e) => {
+                        console.log(e.key, e.key === "Escape");
+                        if (e.key === "Escape") {
+                            closeModal();
+                        }
+                    });
         return (
             <div id="myModal" className="modal">
                 <div className="modal-content">
