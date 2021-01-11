@@ -4,6 +4,7 @@ import { lread } from '../middleware/localStorage';
 import { fetchUser } from '../utils/User';
 import { createLog } from '../utils/Log';
 import { closeModal } from '../utils/Modal';
+var justIssued = 0;
 
 class IssueBook extends Component {
     state = {
@@ -17,9 +18,8 @@ class IssueBook extends Component {
         users.users.forEach((user) => {
             if (user._id === lread('bkclbSid').split(',')[1]) return;
             var option = document.createElement('option');
-            var text = user.email + '-' + user._id;
             option.setAttribute('value', user.email + '-' + user._id);
-            option.textContent = text;
+            option.textContent = user.name ? `${user.name} | ${user.email}` : user.email;
             option.setAttribute('class', 'issuer-option');
             issuerSelector.appendChild(option);
         });
@@ -44,13 +44,15 @@ class IssueBook extends Component {
         document.querySelector('.issue-book-status').innerHTML = 'Created.';
         document.querySelector('.submitIssue').disabled = false;
         setTimeout(closeModal, 1000);
-
+        justIssued = this.props.justIssued + 1;
+        this.props.changeStateValues('justIssued', justIssued);
+        window.location.reload();
     }
 
     render = () => {
         const { bookId } = this.props;
         return (
-            <div className="issue-book">
+            <div className="issue-book modal-with-white-bg">
                 <form className="log-details">
                     <label htmlFor="bookId" className="issue-book-label">Book ID:</label>
                     <hr />

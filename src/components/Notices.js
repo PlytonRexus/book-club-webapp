@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import '../css/Notices.css';
 import { fetchNotice } from "../utils/Notice";
+import { launchModal } from "../utils/Modal";
 
 const NoticeCards = (props) => {
     if (!props.notices) {
@@ -59,9 +60,17 @@ class Notices extends Component {
 
     componentDidMount = async () => {
         const notices = await fetchNotice();
-        this.setState({
-            notices: notices.notices
-        });
+        if (notices) {
+            this.setState({
+                notices: notices.notices
+            });
+        }
+        else {
+            launchModal();
+            return window
+            .ModalRef
+            .setState({ toLoad: <div>Some error occured.</div>});
+        }
         document.title = "Notices";
     }
 

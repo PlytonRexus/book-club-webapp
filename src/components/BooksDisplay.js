@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { lread } from '../middleware/localStorage';
 import IssueBook from './IssueBook';
-import { launchModal } from '../utils/Modal';
+import { launchModal, closeModal } from '../utils/Modal';
+import Loader from "./Loader";
+import { addToReadBook, deleteToReadBook } from "../utils/User";
 
 const DisplayBody = (props) => {
     var body;
+
     if (props.books) {
         body = props.books.map((book, index) => {
             return (
@@ -23,22 +26,67 @@ const DisplayBody = (props) => {
                     <td>{book.price}</td>
                     <td>{book.edition}</td>
                     <td>{book.year_written}</td>
-                    <td>{book.available ? 'Yes' : 'No'}</td>
+                    {/* <td>{book.available ? 'Yes' : 'No'}</td> */}
                     <td>{book.form}</td>
-                    { book.available && lread('bkclbSid') ? 
+                    { lread('bkclbSid') ? book.available ? 
                         <td>
                             <button onClick={(e) => {
-                                e.preventDefault();
-                                launchModal();
-                                window
-                                .ModalRef
-                                .setState({ toLoad: <IssueBook bookId={book._id} /> });
+                                    e.preventDefault();
+                                    launchModal();
+                                    window
+                                    .ModalRef
+                                    .setState({ 
+                                        toLoad: <IssueBook 
+                                            bookId={book._id} 
+                                            changeStateValues={props.changeStateValues} 
+                                            justIssued={props.justIssued}
+                                        /> 
+                                    });
                                 }}
                                 className="catalogue-issue-button"
                             >
                                 Issue
                             </button>
-                        </td> : null 
+                        </td> : <td>Unavailable</td> : null
+                    }
+                    { lread('bkclbSid') ? !props.toRead.includes(book._id) ? 
+                        <td>
+                            <button onClick={async (e) => {
+                                    e.preventDefault();
+                                    launchModal();
+                                    window
+                                    .ModalRef
+                                    .setState({ toLoad: <Loader /> });
+                                    const toRead = await addToReadBook([book._id]);
+                                    console.log(toRead);
+                                    props.changeStateValues('toRead', toRead);
+                                    closeModal();
+                                }}
+                                className="catalogue-issue-button"
+                            >
+                                Add
+                            </button>
+                        </td> : 
+                        <td>
+                            <button onClick={async (e) => {
+                                    e.preventDefault();
+                                    launchModal();
+                                    window
+                                    .ModalRef
+                                    .setState({ toLoad: <Loader /> });
+                                    const toRead = await deleteToReadBook(book._id);
+                                    console.log(toRead);
+                                    props.changeStateValues('toRead', toRead);
+                                    closeModal();
+                                }}
+                                style={{
+                                    backgroundColor: "red"
+                                }}
+                                className="catalogue-issue-button"
+                            >
+                                Remove
+                            </button>
+                        </td> : null
                     }
                 </tr>
             );
@@ -57,9 +105,10 @@ const DisplayHead = (props) => {
                 <th>Price</th>
                 <th>Edition</th>
                 <th>Year Written</th>
-                <th>Available</th>
+                {/* <th>Available</th> */}
                 <th>Format</th>
                 { lread('bkclbSid') ? <th>Issue</th> : null }
+                { lread('bkclbSid') ? <th>Want To Read</th> : null }
             </tr>
         </thead>
     );
@@ -67,18 +116,27 @@ const DisplayHead = (props) => {
 
 class BooksDisplay extends Component {
     state = {
-        displayHeader: 'free'
+        displayHeader: 'free',
+        justIssued: 0,
+        toRead: lread('bkclbSread') ? lread('bkclbSread').split(',') : []
+    }
+
+    changeStateValues = (what, toWhat) => {
+        this.setState({ [what]: toWhat });
     }
 
     render() {
         const { books } = this.props;
+        const { justIssued, toRead } = this.state;
         return (
             <div className="table-wrapper">
                 <table className="fl-table">
-                    <DisplayHead 
-                    />
+                    <DisplayHead />
                     <DisplayBody 
-                        books={ books }
+                        books={books}
+                        toRead={toRead}
+                        changeStateValues={this.changeStateValues}
+                        justIssued={justIssued}
                     />
                 </table>
             </div>

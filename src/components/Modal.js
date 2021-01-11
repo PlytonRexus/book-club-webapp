@@ -4,26 +4,31 @@ import { closeModal } from "../utils/Modal";
 
 class Modal extends Component {
     state = {
-        toLoad: null
+        toLoad: null,
+        closable: true
     }
-    render() {
+    
+    render = () => {
+        const { closable, toLoad } = this.state;
         window.addEventListener("keydown", (e) => {
-                        console.log(e.key, e.key === "Escape");
-                        if (e.key === "Escape") {
-                            closeModal();
-                        }
-                    });
+            console.log('closability:', closable);
+            if (e.key === "Escape" && closable) {
+                closeModal();
+            } else if (!closable) {
+                return;
+            }
+        });
         return (
             <div id="myModal" className="modal">
                 <div className="modal-content">
-                    <span className="close" onClick={(e) => {
+                    { closable ? <span className="close" onClick={(e) => {
                         e.preventDefault();
                         closeModal();
                     }}>
                         &times;
-                    </span>
+                    </span> : null}
                     <div>
-                        { this.state.toLoad ? this.state.toLoad : null }
+                        { toLoad ? toLoad : null }
                     </div>
                     
                 </div>

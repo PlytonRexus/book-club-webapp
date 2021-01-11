@@ -3,6 +3,8 @@ import { fetchLogById, updateLog } from "../utils/Log";
 import { lread } from '../middleware/localStorage';
 import '../css/Log.css';
 import { fetchUser } from '../utils/User';
+import { launchModal, closeModal } from '../utils/Modal';
+import Loader from "./Loader";
 
 class LogEditor extends Component {
     state = {
@@ -19,10 +21,12 @@ class LogEditor extends Component {
         users.users.forEach((user) => {
             if (user._id === lread('bkclbSid').split(',')[1]) return;
             var option = document.createElement('option');
-            var text = user.email;
+            var text = user.name ? `${user.name} | ${user.email}` : user.email;
             option.textContent = text;
             option.setAttribute('class', 'issuedTo-option');
             option.setAttribute('value', user._id);
+
+            if (this.props.log.issuedTo === user._id) option.setAttribute('selected', true);
             issuedToSelector.appendChild(option);
         });
 
@@ -69,7 +73,8 @@ class LogEditor extends Component {
         lissuedOn += `${iyear}-${imonth}-${idate}`;
         lreturnedOn += `${ryear}-${rmonth}-${rdate}`;
 
-        this.fetchIssuedToOptions(lissuedOn, lreturnedOn);
+        await this.fetchIssuedToOptions(lissuedOn, lreturnedOn);
+        closeModal()
     }
 
     handleChange = event => {
@@ -90,12 +95,16 @@ class LogEditor extends Component {
         const { id, issuedOn, issuedTo, returnedOn } = this.state;
         var lio = issuedOn ? Date.parse(issuedOn) : this.props.log.issuedOn;
         var lro = returnedOn ? Date.parse(returnedOn) : this.props.log.issuedOn;
-        await updateLog(id, { 
+        let result = await updateLog(id, { 
             issuedOn: lio, 
             issuedTo: issuedTo, 
             returnedOn: lro
         });
+        if (result)
         document.querySelector('.log-editor-alert-area').innerHTML = 'Saved.';
+        else
+        document.querySelector('.log-editor-alert-area').innerHTML = 'Some error occured.';
+
         document.querySelector('.log-editor-form-issuedOn').disabled = false;
         document.querySelector('.log-editor-form-returnedOn').disabled = false;
         document.querySelector('.log-editor-form-issuedTo').disabled = false;
@@ -152,7 +161,7 @@ class LogEditor extends Component {
                             You
                         </option>
                     </select>
-                    <span className="log-editor-alert-area"></span>
+                    <p className="log-editor-alert-area"></p>
                     <hr />
                     <button 
                         className="log-editor-form-submit"
@@ -179,6 +188,12 @@ class Log extends Component {
     }
 
     componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ toLoad: <Loader />,
+            closable: false 
+        });
         var fetchedLog= await fetchLogById(this.state.id);
         if (fetchedLog) {
             this.setState({ log: fetchedLog});

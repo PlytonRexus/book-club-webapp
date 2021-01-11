@@ -89,7 +89,7 @@
     color: #fff;
     margin-right: 10px;
     font-size: 18px;
-    background-color: lightsalmon;
+    background-color: red;
     transition: display 2s;
     cursor: pointer;
 }

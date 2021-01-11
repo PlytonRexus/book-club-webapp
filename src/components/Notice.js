@@ -8,7 +8,7 @@ import Header from './Header';
 class FormattingInfo extends Component {
     render = () => {
         return (
-            <div className="formatting-instructions">
+            <div className="formatting-instructions modal-with-white-bg">
                 <h4>You can use basic HTML syntax to format the notice body. For example:</h4>
                 <p>
                     <ul>
@@ -82,7 +82,11 @@ class NoticeEditor extends Component {
         document.querySelector('.notice-editor-form-delete').disabled = true;
         launchModal();
         window.ModalRef.setState({
-            toLoad: <div><em>Notice deleted successfully.</em><br />
+            toLoad: <div  style={{
+                background: '#fff',
+                padding: '20px',
+                border: '2px solid white'
+            }}><em>Notice deleted successfully.</em><br />
             You can continue editing to create a new notice or close this tab to discard changes.</div>
         })
     }
@@ -171,8 +175,12 @@ class Notice extends Component {
         launchModal();
         window
         .ModalRef
-        .setState({ toLoad: <FormattingInfo /> });
-        if(this.state.id.length > 0) {
+        .setState({ toLoad: 
+            <div>
+                <FormattingInfo />
+            </div> 
+        });
+        if (this.state.id.length > 0) {
             var fetchedNotice= await fetchNoticeById(this.state.id);
             if (fetchedNotice) {
                 this.setState({ notice: fetchedNotice });

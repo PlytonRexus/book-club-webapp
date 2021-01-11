@@ -34,6 +34,40 @@ const fetchUser = async (endpoint, uid) => {
     }
 }
 
+const addToReadBook = async (toRead) => {
+    var response;
+    try {
+        response = await fetch (
+            `${usersURL}/toRead/post`, 
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: `app@book.club`,
+                    password: `android@superUser`,
+                    _id: lread('bkclbSid') ? lread('bkclbSid').split(',')[0] : null,
+                    toRead: toRead
+                })
+            }
+        );
+
+        if (response.ok) {
+            var res = await response.json();
+            return res.toRead;
+        }
+        else {
+            console.log(await response.json())
+            return null;
+        }
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
 const updateUser = async ({ email, password, name }) => {
     var response;
     try {
@@ -72,4 +106,37 @@ const updateUser = async ({ email, password, name }) => {
     }
 }
 
-export { fetchUser, updateUser };
+const deleteToReadBook = async (id) => {
+    var response;
+    try {
+        response = await fetch (
+            `${usersURL}/toRead/${id}`, 
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: `app@book.club`,
+                    password: `android@superUser`,
+                    _id: lread('bkclbSid') ? lread('bkclbSid').split(',')[0] : null
+                })
+            }
+        );
+
+        if (response.ok) {
+            var res = await response.json();
+            return res.toRead;
+        }
+        else {
+            console.log(await response.json())
+            return null;
+        }
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export { fetchUser, updateUser, addToReadBook, deleteToReadBook };

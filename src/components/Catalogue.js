@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../css/Catalogue.css';
 import SearchBar from './SearchBar';
 import BooksDisplay from "./BooksDisplay";
+import { launchModal, closeModal } from '../utils/Modal';
+import Loader from './Loader';
 
 const catalogueURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
@@ -12,7 +14,6 @@ class Catalogue extends Component {
             results: {},
             filtered: null
         }
-        this.componentDidMount.bind(this);
     }
 
     filterSearch = (query) => {
@@ -60,9 +61,17 @@ class Catalogue extends Component {
         else console.log('HTTP-Error: ' + response.status);
     }
 
-    componentDidMount = () => {
-        this.fetchBooks();
+    componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ 
+            toLoad: <Loader />,
+            closable: false 
+        });
+        await this.fetchBooks();
         document.title = "Catalogue";
+        closeModal();
     }
 
     render = () => {

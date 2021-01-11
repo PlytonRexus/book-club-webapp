@@ -5,10 +5,20 @@ import Display from "./LogsDisplay";
 import { lread, lwrite } from "../middleware/localStorage";
 import Header from "./Header";
 import BooksDisplay from './BooksDisplay';
+import Loader from "./Loader";
+import { closeModal, launchModal } from "../utils/Modal";
 
 var arrayedProps = [];
 
 const UserDetailsBody = props => {
+
+    const showPassword = () => {
+        document.querySelector(".user-password").type = 'text';
+    }
+
+    const hidePassword = () => {
+        document.querySelector(".user-password").type = 'password';
+    }
 
     // Contains properties that will be displayed to the user.
 
@@ -21,21 +31,47 @@ const UserDetailsBody = props => {
         if(property === 'password' && !(lread('bkclbSid').split(',')[0] === props.user['_id'])) return null;
         arrayedProps.push(property);
 
-        // Main details pane - return statement
-        return (
-            <tr key={ property }>
-                <th key={ property }>{ property.toLocaleUpperCase() }</th>
-                <td>
-                    <input 
-                        type={property}
-                        disabled={true}
-                        defaultValue={typeof(props.user[property]) === 'string' ? props.user[property].replace(/"/g, "") : props.user[property]}
-                        className={`user-${property} user-fields-textarea`}
-                    >
-                    </input>
-                </td>
-            </tr>
-        );
+        if (property !== 'password') {
+            // Main details pane - return statement
+            return (
+                <tr key={ property }>
+                    <th key={ property }>{ property.toLocaleUpperCase() }</th>
+                    <td>
+                        <input 
+                            type={property}
+                            disabled={true}
+                            defaultValue={typeof(props.user[property]) === 'string' ? props.user[property].replace(/"/g, "") : props.user[property]}
+                            className={`user-${property} user-fields-textarea`}
+                        >
+                        </input>
+                    </td>
+                </tr>
+            );   
+        }
+        else {
+            return (
+                <tr key={ property }>
+                    <th key={ property }>{ property.toLocaleUpperCase() }</th>
+                    <td>
+                        <input 
+                            type={property}
+                            disabled={true}
+                            defaultValue={typeof(props.user[property]) === 'string' ? props.user[property].replace(/"/g, "") : props.user[property]}
+                            className={`user-${property} user-fields-textarea`}
+                        />
+                    </td>
+                    <td>
+                        <button
+                            disabled={true}
+                            className={`user-${property} user-fields-textarea`}
+                            id={`show-password-button`}
+                        >
+                            Show
+                        </button>
+                    </td>
+                </tr>
+            ); 
+        }
     });
 
     const enableEditing = (e) => {
@@ -46,6 +82,21 @@ const UserDetailsBody = props => {
         editable.forEach((property) => {
             if (!document.querySelector(`.user-${property}`)) return;
             document.querySelector(`.user-${property}`).disabled = false;
+            if (property === 'password') {
+                document.querySelector('#show-password-button').disabled = false;
+                document.querySelector('#show-password-button').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPassword();
+                });
+                document.querySelector('#show-password-button').addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    showPassword();
+                });
+                document.querySelector('#show-password-button').addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    hidePassword();
+                });
+            }
         });
 
         if (document.querySelector('.user-edit-status')) {
@@ -157,6 +208,23 @@ const UserDetailsBody = props => {
         }
     }
 
+    if (!(arrayedProps.includes('name'))) {
+        return (
+            <tr key={ 'name' }>
+                <th key={ 'name' }>NAME</th>
+                <td>
+                    <input 
+                        type={'name'}
+                        name='name'
+                        disabled={true}
+                        className={`user-name user-fields-textarea`}
+                    >
+                    </input>
+                </td>
+            </tr>
+        );   
+    }
+
     return (
         <tbody>
             {body}
@@ -255,26 +323,38 @@ class User extends Component {
     }
 
     componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ toLoad: <Loader />,
+            closable: false 
+        });
         var fetchedUser;
         if(this.state.id)
         fetchedUser = await fetchUser(this.state.id);
-        var issuedByUser = await fetchUser('issued/all', this.state.id);
         if (fetchedUser) {
             this.setState({ 
                 user: fetchedUser,
-                logs: issuedByUser.books.map((log) => {
-                    return {
-                        book: log.book.title,
-                        issuedTo: log.issuedTo,
-                        issuedOn: log.issuedOn,
-                        returnedOn: log.returnedOn,
-                        createdBy: log.createdBy
-                    }
-                }),
                 toRead: fetchedUser.toRead
             });
             document.title = fetchedUser.email;
-        }                                                                                                                                                                                                                                                                      
+        }
+
+        var issuedByUser = await fetchUser('issued/all', this.state.id);
+        if (issuedByUser) {
+            console.log(issuedByUser.books);
+            var logs = issuedByUser.books.map((log) => {
+                return {
+                    book: log.book.title,
+                    issuedTo: log.issuedTo,
+                    issuedOn: log.issuedOn,
+                    returnedOn: log.returnedOn,
+                    createdBy: log.createdBy
+                }
+            });
+            this.setState({ logs: logs });
+        }
+        closeModal();                                                                                                                                                                                                                                                                  
     }
 
     render = () => {                                                                                                                                

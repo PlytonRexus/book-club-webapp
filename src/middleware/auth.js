@@ -30,8 +30,8 @@ const signin = async (email, password) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                email: 'app@book.club',
-                password: 'android@superUser',
+                email: `app@book.club`,
+                password: `android@superUser`,
                 new: {
                     email, 
                     password 

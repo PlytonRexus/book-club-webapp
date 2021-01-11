@@ -5,14 +5,16 @@ import { signout } from '../middleware/auth';
 import { lread } from '../middleware/localStorage';
 
 class Topbar extends Component {
-    state ={
-        menu: 'closed'
+    state = {
+        menu: 'closed',
+        typeWriter: 1
     }
 
     attemptSignout = () => {
         if(signout())
         this.props.switchAuthState(false);
         this.toggleMenu();
+        window.location.reload();
     }
 
     toggleMenu = () => {
@@ -27,6 +29,26 @@ class Topbar extends Component {
         }
     }
 
+    // typeWriter = (id, text) => {
+    //     let i = 0;
+    //     let timeout = 300;
+    //     setInterval(() => {
+    //         if (this.state.typeWriter === 0) return;
+    //         document.querySelector(`#${id}`).innerHTML += text[i];
+    //         i += 1;
+    //         setTimeout(function() {
+    //             if (i === text.length) {
+    //                 document.querySelector(`#${id}`).innerHTML = "";
+    //                 i = 0;
+    //             }
+    //         }, 250);
+    //     }, timeout);
+    // }
+
+    // stopTypeWriter = () => {
+    //     this.setState({ typeWriter: 0 });
+    // }
+
     render() {
         // var { switchSidebar } = this.props;
         return (
@@ -34,7 +56,7 @@ class Topbar extends Component {
                 <Burger 
                     // switchSidebar={switchSidebar}
                 />
-                <span href="#home" className="page-title">Book Club</span>
+                <span href="#home" className="page-title" id="site-title">Book Club</span>
                 <span id="topbar-social-wrapper">
                     <a
                         id="topbar-social"

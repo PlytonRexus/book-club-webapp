@@ -37,10 +37,12 @@ class SidebarAuth extends Component {
         if (user) {
             const { switchAuthState } = this.props;
             lwrite('bkclbSid', [user.user._id, user.user.email, user.user.admin, user.user.superUser]);
+            lwrite('bkclbSread', user.user.toRead ? user.user.toRead : []);
             switchAuthState(true);
             if (document.documentElement.clientWidth < 800) {
                 closeSidebar();
             }
+            window.location.reload();
             // this.switchFieldAccess(false);
             // this.showStatus('Success!');
         }

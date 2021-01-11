@@ -85,9 +85,10 @@ const fetchLogById = async (id) => {
 
 const updateLog = async (lid, { issuedTo, returnedOn, issuedOn }) => {
     var response;
+    var url = `https://frigid-fox.herokuapp.com/v1/logs/${lid}`;
     try {
         response = await fetch(
-            `https://frigid-fox.herokuapp.com/v1/logs/${lid}`, {
+            url, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

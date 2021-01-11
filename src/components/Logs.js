@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import '../css/Catalogue.css';
 import SearchBar from './SearchBar';
-import { launchModal } from '../utils/Modal';
+import { launchModal, closeModal } from '../utils/Modal';
 import { fetchLog } from '../utils/Log';
 import '../css/Logs.css';
 import Display from "./LogsDisplay";
+import Loader from './Loader';
 
 class Logs extends Component {
     constructor(props) {
@@ -43,13 +44,21 @@ class Logs extends Component {
     }
 
     componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ toLoad: <Loader />,
+            closable: false 
+        });
         await this.setLogs();
         document.title = "Logs";
+        closeModal();
     }
 
     setLogs = async () => {
         const logs = await fetchLog();
         if (!logs) {
+            closeModal();
             launchModal();
             return window
             .ModalRef

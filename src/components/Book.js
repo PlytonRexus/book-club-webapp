@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { fetchBook } from "../utils/Book";
 import '../css/Book.css';
 import Header from './Header';
+import { launchModal, closeModal } from '../utils/Modal';
+import Loader from "./Loader";
 
 const bookURL = 'https://frigid-fox.herokuapp.com/v1/books';
 
@@ -71,11 +73,16 @@ class Book extends Component {
     }
 
     componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ toLoad: <Loader /> });
         var fetchedBook = await fetchBook(bookURL, this.state.id);
         if (fetchedBook) {
             this.setState({ book: fetchedBook });
             window.title = fetchedBook.title;
         }
+        closeModal();
     }
 
     render = () => {

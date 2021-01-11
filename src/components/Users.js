@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../css/Users.css';
 import SearchBar from './SearchBar';
-import { launchModal } from '../utils/Modal';
+import { launchModal, closeModal } from '../utils/Modal';
 import { fetchUser } from '../utils/User';
 import '../css/Users.css';
+import Loader from './Loader';
 
 const DisplayBody = (props) => {
     var body = null;
@@ -129,7 +130,14 @@ class Users extends Component {
     }
 
     componentDidMount = async () => {
+        launchModal();
+        window
+        .ModalRef
+        .setState({ toLoad: <Loader />,
+            closable: false 
+        });
         await this.setUsers();
+        closeModal();
     }
 
     setUsers = async () => {
@@ -152,7 +160,7 @@ class Users extends Component {
             <div>
                 <header>
                     <h1 className="page-header">
-                        Users
+                        Members
                         <SearchBar 
                             filterSearch={this.filterSearch} 
                             placeholder="Name, Email, ID, Joined..." 

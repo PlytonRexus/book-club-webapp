@@ -42,3 +42,8 @@
 .log-editor-form-submit:hover {
     background-color: lightyellow;
 }
+
+.log-editor-alert-area {
+    margin: 5px auto;
+    
+}
